@@ -65,6 +65,19 @@ public class Conexion {
         }
     }
     
+    public ResultSet getEntregableByFase(String idFase){
+        try {
+            query = conection.prepareStatement("SELECT * FROM entregables WHERE idFase = ?");
+            query.setString(1, idFase);
+            data = query.executeQuery();
+            
+            return data;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
     public boolean insertProject(String id, String nombre, String objetivo, String alcance, String tiempo, String area, String costo){
         int affectedRows = 0;
         

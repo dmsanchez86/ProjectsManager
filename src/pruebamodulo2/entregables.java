@@ -1,5 +1,8 @@
 package pruebamodulo2;
 
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Conexion;
 
 /*
@@ -10,9 +13,18 @@ public class entregables extends javax.swing.JFrame {
     
     public String idFase;
     Conexion conection;
+    ResultSet dataTeam;
+    DefaultTableModel modelTable;
 
     public entregables() {
         initComponents();
+        
+        modelTable = new DefaultTableModel();
+        
+        modelTable.addColumn("Nombre");
+        modelTable.addColumn("Tipo");
+        modelTable.addColumn("Fecha Inicio");
+        modelTable.addColumn("Fecha Fin");
         
         jPanel1.setVisible(false);
         
@@ -167,7 +179,7 @@ public class entregables extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+        filltable();
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -176,8 +188,29 @@ public class entregables extends javax.swing.JFrame {
             jPanel1.setVisible(true);
             jButton1.setText("Registrar Entregable");
         }else{
-            jPanel1.setVisible(false);
-            jButton1.setText("Agregar Entregable");
+            if("".equals(txtNombreEntregable.getText()) || "".equals(txtTipoEntregable.getText()) || "".equals(txtFechaInicioEntregable.getText()) || "".equals(txtFechaFinEntregable.getText())){
+                JOptionPane.showMessageDialog(this, "Complete los campos");
+            }else{
+                String nombre = txtNombreEntregable.getText();
+                String tipo = txtTipoEntregable.getText();
+                String fechaInicio = txtFechaInicioEntregable.getText();
+                String fechaFin = txtFechaFinEntregable.getText();
+                
+                if(conection.insertEntregable(idFase, nombre, tipo, fechaInicio, fechaFin)){
+                    txtNombreEntregable.setText("");
+                    txtTipoEntregable.setText("");
+                    txtFechaInicioEntregable.setText("");
+                    txtFechaFinEntregable.setText("");
+                    
+                    jPanel1.setVisible(false);
+                    jButton1.setText("Agregar Entregable");
+                    
+                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
+                    
+                    clearTable();
+                    filltable();
+                }
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -231,4 +264,30 @@ public class entregables extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreEntregable;
     private javax.swing.JTextField txtTipoEntregable;
     // End of variables declaration//GEN-END:variables
+    private void filltable() {
+        ResultSet dataEntregable = conection.getEntregableByFase(idFase);
+        
+        try {
+            while(dataEntregable.next()){
+                Object[] row = new Object[4];
+                row[0] = dataEntregable.getString("nombre");
+                row[1] = dataEntregable.getString("tipo");
+                row[2] = dataEntregable.getString("fechaInicio");
+                row[3] = dataEntregable.getString("fechaFin");
+                
+                modelTable.addRow(row);
+            }
+        } catch (Exception e) {
+        }
+        
+        jta_entregable.setModel(modelTable);
+    }
+
+    private void clearTable() {
+        DefaultTableModel modelo = (DefaultTableModel) jta_entregable.getModel();
+        int numeroColumnas = jta_entregable.getRowCount() - 1;
+        for (int i = numeroColumnas; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
 }
