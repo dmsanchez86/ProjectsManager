@@ -146,10 +146,12 @@ public class ListFases extends javax.swing.JFrame {
         if("Agregar Equipo de Trabajo".equals(reference)){
             workTeam wt = new workTeam();
             wt.idFase = idFase;
+            wt.idProyecto = idProyecto;
             wt.setVisible(true);
         }else{
             entregables e = new entregables();
             e.idFase = idFase;
+            e.idProyecto = idProyecto;
             e.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
