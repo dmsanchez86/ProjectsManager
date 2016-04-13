@@ -28,6 +28,31 @@ public class Conexion {
         return true;
     }
     
+    public ResultSet getProjects(){
+        try {
+            query = conection.prepareStatement("SELECT * FROM proyecto");
+            data = query.executeQuery();
+            
+            return data;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public ResultSet getFasesByProject(String idProject){
+        try {
+            query = conection.prepareStatement("SELECT * FROM fases WHERE idProyecto = ?");
+            query.setString(1, idProject);
+            data = query.executeQuery();
+            
+            return data;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
     public boolean insertProject(String id, String nombre, String objetivo, String alcance, String tiempo, String area, String costo){
         int affectedRows = 0;
         
@@ -75,5 +100,48 @@ public class Conexion {
         
         return false;
     }
+ 
+    public boolean insertMemberTeam(String idFase, String nombre, String rol){
+        int affectedRows = 0;
+        
+        try {
+            query = conection.prepareStatement("INSERT INTO responsables VALUES(?,?,?)");
+            query.setString(1, null);
+            query.setString(2, nombre);
+            query.setString(3, rol);
+            
+            affectedRows = query.executeUpdate();
+            
+            if(affectedRows > 0){
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return false;
+    }
     
+    public boolean insertEntregable(String idFase, String nombre, String tipo, String fechaInicio, String fechaFin){
+        int affectedRows = 0;
+        
+        try {
+            query = conection.prepareStatement("INSERT INTO entregables VALUES(?,?,?,?,?)");
+            query.setString(1, idFase);
+            query.setString(2, nombre);
+            query.setString(3, tipo);
+            query.setString(4, fechaInicio);
+            query.setString(5, fechaFin);
+            
+            affectedRows = query.executeUpdate();
+            
+            if(affectedRows > 0){
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return false;
+    }
 }
