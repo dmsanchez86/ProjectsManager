@@ -1,6 +1,7 @@
 package pruebamodulo2;
 
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Conexion;
 
@@ -8,40 +9,25 @@ import model.Conexion;
  * @author Daniel M. Sánchez
  * @siteweb http://dmsanchez86.github.io
  */
-public class ListProjects extends javax.swing.JFrame {
+public class ListFases extends javax.swing.JFrame {
 
-    Conexion conection;
-    ResultSet dataProjects;
-    DefaultTableModel tableModel;
+    String idProyecto;
     int selectedRow;
+    public String ref;
+    Conexion conection;
+    DefaultTableModel modelTable;
     
-    public ListProjects() {
+    public ListFases() {
         initComponents();
-        
-        selectedRow = -1;
-        
-        tableModel = new DefaultTableModel();
-        
-        tableModel.addColumn("Id");
-        tableModel.addColumn("Nombre");
         
         conection = new Conexion();
         conection.conectToDatabase();
         
-        dataProjects = conection.getProjects();
-        
-        try {
-            while(dataProjects.next()){
-                Object[] row = new Object[2];
-                row[0] = dataProjects.getString("id");
-                row[1] = dataProjects.getString("nombre");
-                tableModel.addRow(row);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        jtaProjects.setModel(tableModel);
+        modelTable = new DefaultTableModel();
+        modelTable.addColumn("Id Fase");
+        modelTable.addColumn("Nombre Fase");
+        modelTable.addColumn("Fecha Inicio");
+        modelTable.addColumn("Fecha Fin");
     }
 
     /**
@@ -55,19 +41,24 @@ public class ListProjects extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtaProjects = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jtaFasesProject = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Proyectos");
+        setTitle("Fases del Proyecto");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Proyectos");
+        jLabel1.setText("Fases Proyectos");
 
-        jtaProjects.setModel(new javax.swing.table.DefaultTableModel(
+        jtaFasesProject.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -78,25 +69,25 @@ public class ListProjects extends javax.swing.JFrame {
 
             }
         ));
-        jtaProjects.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtaFasesProject.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtaProjectsMouseClicked(evt);
+                jtaFasesProjectMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtaProjects);
-
-        jButton1.setText("Añadir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(jtaFasesProject);
 
         jButton2.setText("Editar");
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Añadir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -107,15 +98,13 @@ public class ListProjects extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -136,33 +125,66 @@ public class ListProjects extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jtaFasesProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtaFasesProjectMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        MainForm mf = new MainForm();
-        mf.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        selectedRow = jtaFasesProject.getSelectedRow();
+        System.out.println(selectedRow);
 
-    private void jtaProjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtaProjectsMouseClicked
-        // TODO add your handling code here:
-        selectedRow = jtaProjects.getSelectedRow();
-        
         if(selectedRow != -1){
             jButton2.setEnabled(true);
         }else{
             jButton2.setEnabled(false);
         }
-    }//GEN-LAST:event_jtaProjectsMouseClicked
+    }//GEN-LAST:event_jtaFasesProjectMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String id = jtaProjects.getValueAt(selectedRow, 0).toString();
+        String reference = jButton2.getText();
+        String idFase = jtaFasesProject.getValueAt(selectedRow, 0).toString();
         
         this.setVisible(false);
-        fases f = new fases();
-        f.idProyecto = id;
-        f.setVisible(true);
+        if("Agregar Equipo de Trabajo".equals(reference)){
+            workTeam wt = new workTeam();
+            wt.idFase = idFase;
+            wt.setVisible(true);
+        }else{
+            entregables e = new entregables();
+            e.idFase = idFase;
+            e.setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        fases mf = new fases();
+        mf.idProyecto = idProyecto;
+        mf.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        jButton2.setText(ref);
+        
+        ResultSet dataFase = conection.getFasesByProject(idProyecto);
+        
+        try {
+            while(dataFase.next()){
+                Object[] row = new Object[4];
+                row[0] = dataFase.getString("id");
+                row[1] = dataFase.getString("nombre");
+                row[2] = dataFase.getString("fechaInicio");
+                row[3] = dataFase.getString("fechaFin");
+                
+                modelTable.addRow(row);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "El proyecto aun no posee fases!");
+        }
+        
+        jtaFasesProject.setModel(modelTable);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -181,20 +203,20 @@ public class ListProjects extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFases.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFases.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFases.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFases.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListProjects().setVisible(true);
+                new ListFases().setVisible(true);
             }
         });
     }
@@ -204,6 +226,6 @@ public class ListProjects extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtaProjects;
+    private javax.swing.JTable jtaFasesProject;
     // End of variables declaration//GEN-END:variables
 }

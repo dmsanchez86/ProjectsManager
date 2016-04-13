@@ -19,7 +19,6 @@ public class Conexion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conection = DriverManager.getConnection("jdbc:mysql://localhost/prueba", "root", "");
-            System.out.println("Conected to Database!");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
             return false;
@@ -42,8 +41,21 @@ public class Conexion {
     
     public ResultSet getFasesByProject(String idProject){
         try {
-            query = conection.prepareStatement("SELECT * FROM fases WHERE idProyecto = ?");
+            query = conection.prepareStatement("SELECT * FROM fase WHERE idProyecto = ?");
             query.setString(1, idProject);
+            data = query.executeQuery();
+            
+            return data;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public ResultSet getTeamByFase(String idFase){
+        try {
+            query = conection.prepareStatement("SELECT * FROM responsables WHERE idFase = ?");
+            query.setString(1, idFase);
             data = query.executeQuery();
             
             return data;
@@ -106,7 +118,7 @@ public class Conexion {
         
         try {
             query = conection.prepareStatement("INSERT INTO responsables VALUES(?,?,?)");
-            query.setString(1, null);
+            query.setString(1, idFase);
             query.setString(2, nombre);
             query.setString(3, rol);
             

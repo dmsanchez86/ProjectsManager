@@ -15,7 +15,6 @@ public class fases extends javax.swing.JFrame {
     public fases() {
         initComponents();
         
-        idProyecto = "3211";
         conection = new Conexion();
         conection.conectToDatabase();
     }
@@ -166,20 +165,24 @@ public class fases extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        workTeam wt = new workTeam();
-        wt.setVisible(true);
+        ListFases lf = new ListFases();
+        lf.ref = jButton1.getText();
+        lf.idProyecto = idProyecto;
+        lf.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        entregables e = new entregables();
-        e.setVisible(true);
+        ListFases lf = new ListFases();
+        lf.ref = jButton2.getText();
+        lf.idProyecto = idProyecto;
+        lf.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(true);
+        this.setVisible(false);
         ListProjects lp = new ListProjects();
         lp.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed

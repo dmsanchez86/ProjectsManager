@@ -1,6 +1,7 @@
 package pruebamodulo2;
 
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Conexion;
 
@@ -51,7 +52,13 @@ public class workTeam extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Responsables Fase");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -79,7 +86,7 @@ public class workTeam extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre");
 
-        jLabel3.setText("Nombre");
+        jLabel3.setText("Rol");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,10 +157,35 @@ public class workTeam extends javax.swing.JFrame {
             jPanel1.setVisible(true);
             jButton1.setText("Registrar");
         }else{
-            jPanel1.setVisible(false);
-            jButton1.setText("Agregar Integrante");
+            
+            if("".equals(txt_nombreResponsable.getText()) || "".equals(txt_rolResponsable.getText())){
+                JOptionPane.showMessageDialog(this, "Complete los campos");
+            }else{
+                String nombre = txt_nombreResponsable.getText();
+                String rol = txt_rolResponsable.getText();
+
+                if(conection.insertMemberTeam(idFase, nombre, rol)){
+                    txt_nombreResponsable.setText("");
+                    txt_rolResponsable.setText("");
+
+                    jPanel1.setVisible(false);
+                    jButton1.setText("Agregar Integrante");
+
+                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
+
+                    clearTable();
+                    filltable();
+                }else{
+                    JOptionPane.showMessageDialog(this, "No se pudo registrar el responsable");
+                }
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        filltable();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -201,4 +233,29 @@ public class workTeam extends javax.swing.JFrame {
     private javax.swing.JTextField txt_nombreResponsable;
     private javax.swing.JTextField txt_rolResponsable;
     // End of variables declaration//GEN-END:variables
+
+    private void filltable() {
+        ResultSet dataTeam = conection.getTeamByFase(idFase);
+        
+        try {
+            while(dataTeam.next()){
+                Object[] row = new Object[2];
+                row[0] = dataTeam.getString("nombre");
+                row[1] = dataTeam.getString("rol");
+                
+                modelTable.addRow(row);
+            }
+        } catch (Exception e) {
+        }
+        
+        jta_members.setModel(modelTable);
+    }
+
+    private void clearTable() {
+        DefaultTableModel modelo = (DefaultTableModel) jta_members.getModel();
+        int numeroColumnas = jta_members.getRowCount() - 1;
+        for (int i = numeroColumnas; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
 }
