@@ -29,7 +29,7 @@ public class Conexion {
     
     public ResultSet getProjects(){
         try {
-            query = conection.prepareStatement("SELECT * FROM proyecto");
+            query = conection.prepareStatement("SELECT p.id, p.nombre,COUNT(f.idProyecto) as fases FROM proyecto p LEFT JOIN fase f ON p.id = f.idProyecto GROUP BY p.id ORDER BY p.nombre");
             data = query.executeQuery();
             
             return data;

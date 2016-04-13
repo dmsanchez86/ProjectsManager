@@ -24,6 +24,7 @@ public class ListProjects extends javax.swing.JFrame {
         
         tableModel.addColumn("Id");
         tableModel.addColumn("Nombre");
+        tableModel.addColumn("N° Fases");
         
         conection = new Conexion();
         conection.conectToDatabase();
@@ -32,9 +33,10 @@ public class ListProjects extends javax.swing.JFrame {
         
         try {
             while(dataProjects.next()){
-                Object[] row = new Object[2];
+                Object[] row = new Object[3];
                 row[0] = dataProjects.getString("id");
                 row[1] = dataProjects.getString("nombre");
+                row[2] = dataProjects.getString("fases");
                 tableModel.addRow(row);
             }
         } catch (Exception ex) {
