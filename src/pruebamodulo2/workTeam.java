@@ -26,6 +26,8 @@ public class workTeam extends javax.swing.JFrame {
         
         modelTable.addColumn("Nombre");
         modelTable.addColumn("Rol");
+        modelTable.addColumn("Direccion");
+        modelTable.addColumn("Telefono");
         
         conection = new Conexion();
         conection.conectToDatabase();
@@ -356,9 +358,11 @@ public class workTeam extends javax.swing.JFrame {
         
         try {
             while(dataTeam.next()){
-                Object[] row = new Object[2];
+                Object[] row = new Object[4];
                 row[0] = dataTeam.getString("nombre");
                 row[1] = dataTeam.getString("rol");
+                row[2] = dataTeam.getString("direccion");
+                row[3] = dataTeam.getString("telefono");
                 
                 modelTable.addRow(row);
             }
