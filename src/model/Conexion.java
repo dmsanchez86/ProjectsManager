@@ -103,16 +103,17 @@ public class Conexion {
         return false;
     }
     
-    public boolean insertFase(String idProyecto, String nombre, String fechaInicio, String fechaFin){
+    public boolean insertFase(String idProyecto, String nombre, String responsable, String fechaInicio, String fechaFin){
         int affectedRows = 0;
         
         try {
-            query = conection.prepareStatement("INSERT INTO fase VALUES(?,?,?,?,?)");
+            query = conection.prepareStatement("INSERT INTO fase VALUES(?,?,?,?,?,?)");
             query.setString(1, null);
             query.setString(2, idProyecto);
             query.setString(3, nombre);
-            query.setString(4, fechaInicio);
-            query.setString(5, fechaFin);
+            query.setString(4, responsable);
+            query.setString(5, fechaInicio);
+            query.setString(6, fechaFin);
             
             affectedRows = query.executeUpdate();
             
