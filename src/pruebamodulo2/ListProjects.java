@@ -27,6 +27,8 @@ public class ListProjects extends javax.swing.JFrame {
         tableModel.addColumn("Tiempo Estimado");
         tableModel.addColumn("Costo");
         tableModel.addColumn("N° Fases");
+        tableModel.addColumn("N° de Miembros Equipo");
+        tableModel.addColumn("N° de Entregables");
         
         conection = new Conexion();
         conection.conectToDatabase();
@@ -35,12 +37,14 @@ public class ListProjects extends javax.swing.JFrame {
         
         try {
             while(dataProjects.next()){
-                Object[] row = new Object[5];
+                Object[] row = new Object[7];
                 row[0] = dataProjects.getString("id");
                 row[1] = dataProjects.getString("nombre");
                 row[2] = dataProjects.getString("tiempoEstimado");
                 row[3] = dataProjects.getString("costo");
                 row[4] = dataProjects.getString("fases");
+                row[5] = dataProjects.getString("miembrosEquipo");
+                row[6] = dataProjects.getString("numeroEntregables");
                 tableModel.addRow(row);
             }
         } catch (Exception ex) {
@@ -140,7 +144,7 @@ public class ListProjects extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -162,7 +166,7 @@ public class ListProjects extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();

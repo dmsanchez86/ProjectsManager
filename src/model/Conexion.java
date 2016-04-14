@@ -29,7 +29,14 @@ public class Conexion {
     
     public ResultSet getProjects(){
         try {
-            query = conection.prepareStatement("SELECT p.id, p.nombre, p.tiempoEstimado, p.costo, p.estado, COUNT(f.idProyecto) as fases FROM proyecto p LEFT JOIN fase f ON p.id = f.idProyecto GROUP BY p.id ORDER BY p.costo DESC");
+            query = conection.prepareStatement(""
+                    + "SELECT p.id, p.nombre, p.tiempoEstimado, p.costo, p.estado, COUNT(f.idProyecto) as fases, COUNT(r.idFase) as miembrosEquipo, COUNT(e.idFase) as numeroEntregables "
+                    + "FROM proyecto p "
+                    + "LEFT JOIN fase f ON p.id = f.idProyecto "
+                    + "LEFT JOIN responsables r ON f.id = r.idFase "
+                    + "LEFT JOIN entregables e ON f.id = e.idFase "
+                    + "GROUP BY p.id, r.idFase, e.idFase "
+                    + "ORDER BY p.costo DESC");
             data = query.executeQuery();
             
             return data;
