@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `fase` (
 `id` int(11) NOT NULL,
   `idProyecto` varchar(20) NOT NULL,
   `nombre` varchar(50) NOT NULL,
+  `responsable` varchar(150) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -52,8 +53,8 @@ CREATE TABLE IF NOT EXISTS `fase` (
 -- Volcado de datos para la tabla `fase`
 --
 
-INSERT INTO `fase` (`id`, `idProyecto`, `nombre`, `fechaInicio`, `fechaFin`) VALUES
-(1, '3211', 'Primera fase', '2016-04-12', '2017-04-12');
+INSERT INTO `fase` (`id`, `idProyecto`, `nombre`, `responsable`, `fechaInicio`, `fechaFin`) VALUES
+(1, '3211', 'Primera fase', 'Mauro Avila', '2016-04-12', '2017-04-12');
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,9 @@ INSERT INTO `proyecto` (`id`, `nombre`, `objetivo`, `alcance`, `tiempoEstimado`,
 CREATE TABLE IF NOT EXISTS `responsables` (
   `idFase` int(11) NOT NULL,
   `nombre` varchar(20) NOT NULL,
-  `rol` varchar(30) NOT NULL
+  `rol` varchar(30) NOT NULL,
+  `direccion` varchar(30) NOT NULL,
+  `telefono` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

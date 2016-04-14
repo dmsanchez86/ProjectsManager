@@ -29,7 +29,7 @@ public class Conexion {
     
     public ResultSet getProjects(){
         try {
-            query = conection.prepareStatement("SELECT p.id, p.nombre,COUNT(f.idProyecto) as fases FROM proyecto p LEFT JOIN fase f ON p.id = f.idProyecto GROUP BY p.id ORDER BY p.nombre");
+            query = conection.prepareStatement("SELECT p.id, p.nombre, p.tiempoEstimado, p.costo, p.estado, COUNT(f.idProyecto) as fases FROM proyecto p LEFT JOIN fase f ON p.id = f.idProyecto GROUP BY p.id ORDER BY p.costo DESC");
             data = query.executeQuery();
             
             return data;
@@ -127,14 +127,16 @@ public class Conexion {
         return false;
     }
  
-    public boolean insertMemberTeam(String idFase, String nombre, String rol){
+    public boolean insertMemberTeam(String idFase, String nombre, String rol, String direccion, String telefono){
         int affectedRows = 0;
         
         try {
-            query = conection.prepareStatement("INSERT INTO responsables VALUES(?,?,?)");
+            query = conection.prepareStatement("INSERT INTO responsables VALUES(?,?,?,?,?)");
             query.setString(1, idFase);
             query.setString(2, nombre);
             query.setString(3, rol);
+            query.setString(4, direccion);
+            query.setString(5, telefono);
             
             affectedRows = query.executeUpdate();
             
