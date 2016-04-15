@@ -35,7 +35,7 @@ public class Conexion {
                     + "LEFT JOIN fase f ON p.id = f.idProyecto "
                     + "LEFT JOIN responsables r ON f.id = r.idFase "
                     + "LEFT JOIN entregables e ON f.id = e.idFase "
-                    + "GROUP BY p.id, r.idFase, e.idFase "
+                    + "GROUP BY p.id "
                     + "ORDER BY p.costo DESC");
             data = query.executeQuery();
             
@@ -48,7 +48,11 @@ public class Conexion {
     
     public ResultSet getFasesByProject(String idProject){
         try {
-            query = conection.prepareStatement("SELECT * FROM fase WHERE idProyecto = ? ORDER BY id DESC");
+            query = conection.prepareStatement(""
+                    + "SELECT * "
+                    + "FROM fase f "
+                    + "WHERE f.idProyecto = ? "
+                    + "ORDER BY id DESC");
             query.setString(1, idProject);
             data = query.executeQuery();
             

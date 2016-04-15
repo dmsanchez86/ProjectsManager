@@ -27,8 +27,8 @@ public class ListProjects extends javax.swing.JFrame {
         tableModel.addColumn("Tiempo Estimado");
         tableModel.addColumn("Costo");
         tableModel.addColumn("N° Fases");
-        tableModel.addColumn("N° de Miembros Equipo");
         tableModel.addColumn("N° de Entregables");
+        tableModel.addColumn("N° de Miembros Equipo");
         
         conection = new Conexion();
         conection.conectToDatabase();
@@ -43,8 +43,8 @@ public class ListProjects extends javax.swing.JFrame {
                 row[2] = dataProjects.getString("tiempoEstimado");
                 row[3] = dataProjects.getString("costo");
                 row[4] = dataProjects.getString("fases");
-                row[5] = dataProjects.getString("miembrosEquipo");
-                row[6] = dataProjects.getString("numeroEntregables");
+                row[5] = dataProjects.getString("numeroEntregables");
+                row[6] = dataProjects.getString("miembrosEquipo");
                 tableModel.addRow(row);
             }
         } catch (Exception ex) {

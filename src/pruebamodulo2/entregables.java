@@ -27,8 +27,6 @@ public class entregables extends javax.swing.JFrame {
         modelTable.addColumn("Fecha Inicio");
         modelTable.addColumn("Fecha Fin");
         
-        jPanel1.setVisible(false);
-        
         conection = new Conexion();
         conection.conectToDatabase();
     }
@@ -58,6 +56,7 @@ public class entregables extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Entregables Proyecto");
@@ -68,7 +67,7 @@ public class entregables extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Agregar Entregable");
+        jButton1.setText("Registrar Entregable");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -203,6 +202,10 @@ public class entregables extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Entregables de la Fase");
 
+        jLabel7.setFont(new java.awt.Font("Nirmala UI", 1, 10)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setText("Datos de la Fase");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,6 +214,9 @@ public class entregables extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,17 +234,19 @@ public class entregables extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 30, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -251,32 +259,31 @@ public class entregables extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if("Agregar Entregable".equals(jButton1.getText())){
-            jPanel1.setVisible(true);
-            jButton1.setText("Registrar Entregable");
+        
+        String nombre = txtNombreEntregable.getText();
+        String tipo = txtTipoEntregable.getText();
+        String fechaInicio = txtFechaInicioEntregable.getText();
+        String fechaFin = txtFechaFinEntregable.getText();
+        
+        if("".equals(nombre)){
+            txtNombreEntregable.requestFocus();
+        }else if("".equals(tipo)){
+            txtTipoEntregable.requestFocus();
+        }else if("".equals(fechaInicio)){
+            txtFechaInicioEntregable.requestFocus();
+        }else if("".equals(fechaFin)){
+            txtFechaFinEntregable.requestFocus();
         }else{
-            if("".equals(txtNombreEntregable.getText()) || "".equals(txtTipoEntregable.getText()) || "".equals(txtFechaInicioEntregable.getText()) || "".equals(txtFechaFinEntregable.getText())){
-                JOptionPane.showMessageDialog(this, "Complete los campos");
-            }else{
-                String nombre = txtNombreEntregable.getText();
-                String tipo = txtTipoEntregable.getText();
-                String fechaInicio = txtFechaInicioEntregable.getText();
-                String fechaFin = txtFechaFinEntregable.getText();
-                
-                if(conection.insertEntregable(idFase, nombre, tipo, fechaInicio, fechaFin)){
-                    txtNombreEntregable.setText("");
-                    txtTipoEntregable.setText("");
-                    txtFechaInicioEntregable.setText("");
-                    txtFechaFinEntregable.setText("");
-                    
-                    jPanel1.setVisible(false);
-                    jButton1.setText("Agregar Entregable");
-                    
-                    JOptionPane.showMessageDialog(this, "Registro Exitoso");
-                    
-                    clearTable();
-                    filltable();
-                }
+            if(conection.insertEntregable(idFase, nombre, tipo, fechaInicio, fechaFin)){
+                txtNombreEntregable.setText("");
+                txtTipoEntregable.setText("");
+                txtFechaInicioEntregable.setText("");
+                txtFechaFinEntregable.setText("");
+
+                JOptionPane.showMessageDialog(this, "Registro Exitoso");
+
+                clearTable();
+                filltable();
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -334,6 +341,7 @@ public class entregables extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
