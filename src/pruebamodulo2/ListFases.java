@@ -24,7 +24,7 @@ public class ListFases extends javax.swing.JFrame {
         conection.conectToDatabase();
         
         modelTable = new DefaultTableModel();
-        modelTable.addColumn("Id Fase");
+        modelTable.addColumn("Id");
         modelTable.addColumn("Nombre Fase");
         modelTable.addColumn("Responsable");
         modelTable.addColumn("Fecha Inicio");

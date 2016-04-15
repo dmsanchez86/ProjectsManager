@@ -48,7 +48,7 @@ public class Conexion {
     
     public ResultSet getFasesByProject(String idProject){
         try {
-            query = conection.prepareStatement("SELECT * FROM fase WHERE idProyecto = ?");
+            query = conection.prepareStatement("SELECT * FROM fase WHERE idProyecto = ? ORDER BY id DESC");
             query.setString(1, idProject);
             data = query.executeQuery();
             

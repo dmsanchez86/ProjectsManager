@@ -93,14 +93,14 @@ public class ListProjects extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtaProjects);
 
-        jButton1.setText("Añadir");
+        jButton1.setText("Nuevo Proyecto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Editar");
+        jButton2.setText("Editar Proyecto");
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +109,7 @@ public class ListProjects extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setToolTipText("");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
