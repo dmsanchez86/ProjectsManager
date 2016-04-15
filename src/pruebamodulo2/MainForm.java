@@ -244,15 +244,31 @@ public class MainForm extends javax.swing.JFrame {
         String area = jcb_area.getSelectedItem().toString();
         String costo = txt_costoProyecto.getText();
         
-        if(conection.insertProject(id, nombre, objetivo, alcance, tiempo, area, costo)){
-            message("Se registro correctamente el proyecto");
-            
-            fases f = new fases();
-            f.setVisible(true);
-            f.idProyecto = id;
-            this.setVisible(false);
+        if("".equals(id)){
+            txt_idProyecto.requestFocus();
+        }else if("".equals(nombre)){
+            txt_nombreProyecto.requestFocus();
+        }else if("".equals(objetivo)){
+            txt_objetivoProyecto.requestFocus();
+        }else if("".equals(alcance)){
+            txt_alcanceProyecto.requestFocus();
+        }else if("".equals(tiempo)){
+            txt_tiempoEstimadoProyecto.requestFocus();
+        }else if("Seleccione".equals(area)){
+            jcb_area.requestFocus();
+        }else if("".equals(costo)){
+            txt_costoProyecto.requestFocus();
         }else{
-            message("No se pudo registrar el proyecto");
+            if(conection.insertProject(id, nombre, objetivo, alcance, tiempo, area, costo)){
+                message("Se registro correctamente el proyecto");
+
+                fases f = new fases();
+                f.setVisible(true);
+                f.idProyecto = id;
+                this.setVisible(false);
+            }else{
+                message("No se pudo registrar el proyecto");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
