@@ -1,6 +1,8 @@
 package pruebamodulo2;
 
 import java.sql.ResultSet;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Conexion;
@@ -52,8 +54,8 @@ public class fases extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txt_nombreFase = new javax.swing.JTextField();
-        txt_fechaInicio = new javax.swing.JTextField();
-        txt_fechaFin = new javax.swing.JTextField();
+        jdcFechaInicio = new com.toedter.calendar.JDateChooser();
+        jdcFechaFin = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtaListFases = new javax.swing.JTable();
@@ -149,13 +151,11 @@ public class fases extends javax.swing.JFrame {
         txt_nombreFase.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_nombreFase.setForeground(new java.awt.Color(204, 204, 204));
 
-        txt_fechaInicio.setBackground(new java.awt.Color(102, 102, 102));
-        txt_fechaInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_fechaInicio.setForeground(new java.awt.Color(204, 204, 204));
+        jdcFechaInicio.setBackground(new java.awt.Color(102, 102, 102));
+        jdcFechaInicio.setDateFormatString("yyyy-MM-d");
 
-        txt_fechaFin.setBackground(new java.awt.Color(102, 102, 102));
-        txt_fechaFin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_fechaFin.setForeground(new java.awt.Color(204, 204, 204));
+        jdcFechaFin.setBackground(new java.awt.Color(102, 102, 102));
+        jdcFechaFin.setDateFormatString("yyyy-MM-d");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,9 +175,9 @@ public class fases extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txt_fechaInicio, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -195,11 +195,11 @@ public class fases extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(txt_nombreFase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(txt_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jdcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -298,24 +298,65 @@ public class fases extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombre = txt_nombreFase.getText();
         String responsable = txt_responsableFase.getText();
-        String fechaInicio = txt_fechaInicio.getText();
-        String fechaFin = txt_fechaFin.getText();
+        
+        // fecha inicio
+        String[] partesFechaInicio = jdcFechaInicio.getDate().toLocaleString().split(" ")[0].split("/");
+        String anioInicio = partesFechaInicio[2];
+        String mesInicio = partesFechaInicio[1];
+        String diaInicio = (Integer.parseInt(partesFechaInicio[0]) < 10 ? "0"+partesFechaInicio[0] : partesFechaInicio[0]);
+        
+        String fechaInicio = anioInicio + "-" + mesInicio + "-" + diaInicio;
+        
+        // fecha Actual
+        Calendar currentDate = Calendar.getInstance();
+        String[] partesFechaActual = currentDate.getTime().toLocaleString().split(" ")[0].split("/");
+        String anioActual = partesFechaActual[2];
+        String mesActual = partesFechaActual[1];
+        String diaActual = (Integer.parseInt(partesFechaActual[0]) < 10 ? "0"+partesFechaActual[0] : partesFechaActual[0]);
+        
+        String fechaActual = anioActual + "-" + mesActual + "-" + diaActual;
+        System.out.println(fechaActual);
+        
+        // fecha fin
+        String[] partesFechaFin = jdcFechaFin.getDate().toLocaleString().split(" ")[0].split("/");
+        String anioFin = partesFechaFin[2];
+        String mesFin = partesFechaFin[1];
+        String diaFin = (Integer.parseInt(partesFechaFin[0]) < 10 ? "0"+partesFechaFin[0] : partesFechaFin[0]);
+        
+        String fechaFin = anioFin + "-" + mesFin + "-" + diaFin;
+        
+        System.out.println(Integer.parseInt(diaInicio));
+        System.out.println(Integer.parseInt(diaFin));
         
         if("".equals(nombre)){
             txt_nombreFase.requestFocus();
         }else if("".equals(responsable)){
             txt_responsableFase.requestFocus();
-        }else if("".equals(fechaInicio)){
-            txt_fechaInicio.requestFocus();
-        }else if("".equals(fechaFin)){
-            txt_fechaFin.requestFocus();
+        }else if(Integer.parseInt(anioFin) < Integer.parseInt(anioInicio)){
+            JOptionPane.showMessageDialog(this, "El año es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioFin) == Integer.parseInt(anioInicio) && Integer.parseInt(mesFin) < Integer.parseInt(mesInicio)){
+            JOptionPane.showMessageDialog(this, "El mes es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if((Integer.parseInt(anioFin) == Integer.parseInt(anioInicio) && Integer.parseInt(mesFin) == Integer.parseInt(mesInicio)) && Integer.parseInt(diaFin) < Integer.parseInt(diaInicio)){
+            JOptionPane.showMessageDialog(this, "El dia es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioInicio) < Integer.parseInt(anioActual)){
+            JOptionPane.showMessageDialog(this, "El año es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioInicio) == Integer.parseInt(anioActual) && Integer.parseInt(mesInicio) < Integer.parseInt(mesActual)){
+            JOptionPane.showMessageDialog(this, "El mes es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
+        }else if((Integer.parseInt(anioInicio) == Integer.parseInt(anioActual) && Integer.parseInt(mesInicio) == Integer.parseInt(mesActual)) && Integer.parseInt(diaInicio) < Integer.parseInt(diaActual)){
+            JOptionPane.showMessageDialog(this, "El dia es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
         }else{
             if(conection.insertFase(idProyecto, nombre, responsable, fechaInicio, fechaFin)){
                 message("Se registro correctamente la fase del proyecto");
 
                 txt_nombreFase.setText("");
-                txt_fechaInicio.setText("");
-                txt_fechaFin.setText("");
+                jdcFechaInicio.setDate(null);
+                jdcFechaFin.setDate(null);
                 
                 clearTable();
                 filltable();
@@ -380,9 +421,9 @@ public class fases extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.toedter.calendar.JDateChooser jdcFechaFin;
+    private com.toedter.calendar.JDateChooser jdcFechaInicio;
     private javax.swing.JTable jtaListFases;
-    private javax.swing.JTextField txt_fechaFin;
-    private javax.swing.JTextField txt_fechaInicio;
     private javax.swing.JTextField txt_nombreFase;
     private javax.swing.JTextField txt_responsableFase;
     // End of variables declaration//GEN-END:variables
