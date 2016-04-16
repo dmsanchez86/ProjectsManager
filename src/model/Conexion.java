@@ -78,7 +78,7 @@ public class Conexion {
     
     public ResultSet getEntregableByFase(String idFase){
         try {
-            query = conection.prepareStatement("SELECT * FROM entregables WHERE idFase = ?");
+            query = conection.prepareStatement("SELECT * FROM entregables WHERE idFase = ? ORDER BY id DESC");
             query.setString(1, idFase);
             data = query.executeQuery();
             
@@ -165,12 +165,13 @@ public class Conexion {
         int affectedRows = 0;
         
         try {
-            query = conection.prepareStatement("INSERT INTO entregables VALUES(?,?,?,?,?)");
-            query.setString(1, idFase);
-            query.setString(2, nombre);
-            query.setString(3, tipo);
-            query.setString(4, fechaInicio);
-            query.setString(5, fechaFin);
+            query = conection.prepareStatement("INSERT INTO entregables VALUES(?,?,?,?,?,?)");
+            query.setInt(1, 0);
+            query.setString(2, idFase);
+            query.setString(3, nombre);
+            query.setString(4, tipo);
+            query.setString(5, fechaInicio);
+            query.setString(6, fechaFin);
             
             affectedRows = query.executeUpdate();
             

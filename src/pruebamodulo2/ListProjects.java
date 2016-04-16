@@ -195,10 +195,12 @@ public class ListProjects extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String id = jtaProjects.getValueAt(selectedRow, 0).toString();
+        String nombre = jtaProjects.getValueAt(selectedRow, 1).toString();
         
         this.setVisible(false);
         fases f = new fases();
         f.idProyecto = id;
+        f.nombreProyecto = nombre;
         f.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

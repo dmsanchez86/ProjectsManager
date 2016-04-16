@@ -240,8 +240,14 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdcFechaInicio">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-d"/>
+          </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdcFechaFin">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-d"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

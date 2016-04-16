@@ -278,7 +278,7 @@ public class workTeam extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
 
-                clearTable();
+                //clearTable();
                 filltable();
             }else{
                 JOptionPane.showMessageDialog(this, "No se pudo registrar el responsable");
@@ -369,6 +369,7 @@ public class workTeam extends javax.swing.JFrame {
                 modelTable.addRow(row);
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         
         jta_members.setModel(modelTable);

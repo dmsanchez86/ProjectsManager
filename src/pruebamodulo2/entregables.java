@@ -114,6 +114,10 @@ public class entregables extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("Fecha Fin");
 
+        jdcFechaInicio.setDateFormatString("yyyy-MM-d");
+
+        jdcFechaFin.setDateFormatString("yyyy-MM-d");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(

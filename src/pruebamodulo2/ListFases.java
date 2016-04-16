@@ -158,7 +158,6 @@ public class ListFases extends javax.swing.JFrame {
     private void jtaFasesProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtaFasesProjectMouseClicked
         // TODO add your handling code here:
         selectedRow = jtaFasesProject.getSelectedRow();
-        System.out.println(selectedRow);
 
         if(selectedRow != -1){
             jButton2.setEnabled(true);

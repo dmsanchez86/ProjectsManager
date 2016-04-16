@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `entregables` (
   `idFase` int(11) NOT NULL,
-  `nombre` varchar(20) NOT NULL,
-  `tipo` varchar(20) NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `tipo` varchar(100) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `entregables` (
 CREATE TABLE IF NOT EXISTS `fase` (
 `id` int(11) NOT NULL,
   `idProyecto` varchar(20) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
   `responsable` varchar(150) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL
@@ -64,11 +64,11 @@ INSERT INTO `fase` (`id`, `idProyecto`, `nombre`, `responsable`, `fechaInicio`, 
 
 CREATE TABLE IF NOT EXISTS `proyecto` (
   `id` varchar(20) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
   `objetivo` text NOT NULL,
   `alcance` text NOT NULL,
-  `tiempoEstimado` varchar(20) NOT NULL,
-  `area` varchar(30) NOT NULL,
+  `tiempoEstimado` varchar(50) NOT NULL,
+  `area` varchar(50) NOT NULL,
   `costo` bigint(20) NOT NULL,
   `estado` enum('propuestos','ejecucion','terminado') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -90,10 +90,10 @@ INSERT INTO `proyecto` (`id`, `nombre`, `objetivo`, `alcance`, `tiempoEstimado`,
 
 CREATE TABLE IF NOT EXISTS `responsables` (
   `idFase` int(11) NOT NULL,
-  `nombre` varchar(20) NOT NULL,
-  `rol` varchar(30) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
-  `telefono` varchar(30) NOT NULL
+  `nombre` varchar(200) NOT NULL,
+  `rol` varchar(50) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `telefono` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
