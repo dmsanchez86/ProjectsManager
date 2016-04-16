@@ -325,9 +325,6 @@ public class fases extends javax.swing.JFrame {
         
         String fechaFin = anioFin + "-" + mesFin + "-" + diaFin;
         
-        System.out.println(Integer.parseInt(diaInicio));
-        System.out.println(Integer.parseInt(diaFin));
-        
         if("".equals(nombre)){
             txt_nombreFase.requestFocus();
         }else if("".equals(responsable)){
@@ -355,6 +352,7 @@ public class fases extends javax.swing.JFrame {
                 message("Se registro correctamente la fase del proyecto");
 
                 txt_nombreFase.setText("");
+                txt_responsableFase.setText("");
                 jdcFechaInicio.setDate(null);
                 jdcFechaFin.setDate(null);
                 

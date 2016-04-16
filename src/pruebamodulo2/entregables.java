@@ -1,6 +1,7 @@
 package pruebamodulo2;
 
 import java.sql.ResultSet;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Conexion;
@@ -49,9 +50,9 @@ public class entregables extends javax.swing.JFrame {
         txtTipoEntregable = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtFechaInicioEntregable = new javax.swing.JTextField();
-        txtFechaFinEntregable = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jdcFechaInicio = new com.toedter.calendar.JDateChooser();
+        jdcFechaFin = new com.toedter.calendar.JDateChooser();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -109,14 +110,6 @@ public class entregables extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("Fecha Inicio");
 
-        txtFechaInicioEntregable.setBackground(new java.awt.Color(102, 102, 102));
-        txtFechaInicioEntregable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFechaInicioEntregable.setForeground(new java.awt.Color(204, 204, 204));
-
-        txtFechaFinEntregable.setBackground(new java.awt.Color(102, 102, 102));
-        txtFechaFinEntregable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFechaFinEntregable.setForeground(new java.awt.Color(204, 204, 204));
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("Fecha Fin");
@@ -131,9 +124,9 @@ public class entregables extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreEntregable, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaInicioEntregable, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombreEntregable, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -142,9 +135,10 @@ public class entregables extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(22, 22, 22)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTipoEntregable, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                    .addComponent(txtFechaFinEntregable))
+                    .addComponent(jdcFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,14 +151,13 @@ public class entregables extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtTipoEntregable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel5)
-                        .addComponent(txtFechaFinEntregable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtFechaInicioEntregable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(jLabel4))
+                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jButton2.setText("Volver");
@@ -234,7 +227,7 @@ public class entregables extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,23 +255,61 @@ public class entregables extends javax.swing.JFrame {
         
         String nombre = txtNombreEntregable.getText();
         String tipo = txtTipoEntregable.getText();
-        String fechaInicio = txtFechaInicioEntregable.getText();
-        String fechaFin = txtFechaFinEntregable.getText();
+        
+        // fecha inicio
+        String[] partesFechaInicio = jdcFechaInicio.getDate().toLocaleString().split(" ")[0].split("/");
+        String anioInicio = partesFechaInicio[2];
+        String mesInicio = partesFechaInicio[1];
+        String diaInicio = (Integer.parseInt(partesFechaInicio[0]) < 10 ? "0"+partesFechaInicio[0] : partesFechaInicio[0]);
+        
+        String fechaInicio = anioInicio + "-" + mesInicio + "-" + diaInicio;
+        
+        // fecha Actual
+        Calendar currentDate = Calendar.getInstance();
+        String[] partesFechaActual = currentDate.getTime().toLocaleString().split(" ")[0].split("/");
+        String anioActual = partesFechaActual[2];
+        String mesActual = partesFechaActual[1];
+        String diaActual = (Integer.parseInt(partesFechaActual[0]) < 10 ? "0"+partesFechaActual[0] : partesFechaActual[0]);
+        
+        String fechaActual = anioActual + "-" + mesActual + "-" + diaActual;
+        System.out.println(fechaActual);
+        
+        // fecha fin
+        String[] partesFechaFin = jdcFechaFin.getDate().toLocaleString().split(" ")[0].split("/");
+        String anioFin = partesFechaFin[2];
+        String mesFin = partesFechaFin[1];
+        String diaFin = (Integer.parseInt(partesFechaFin[0]) < 10 ? "0"+partesFechaFin[0] : partesFechaFin[0]);
+        
+        String fechaFin = anioFin + "-" + mesFin + "-" + diaFin;
         
         if("".equals(nombre)){
             txtNombreEntregable.requestFocus();
         }else if("".equals(tipo)){
             txtTipoEntregable.requestFocus();
-        }else if("".equals(fechaInicio)){
-            txtFechaInicioEntregable.requestFocus();
-        }else if("".equals(fechaFin)){
-            txtFechaFinEntregable.requestFocus();
+        }else if(Integer.parseInt(anioFin) < Integer.parseInt(anioInicio)){
+            JOptionPane.showMessageDialog(this, "El año es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioFin) == Integer.parseInt(anioInicio) && Integer.parseInt(mesFin) < Integer.parseInt(mesInicio)){
+            JOptionPane.showMessageDialog(this, "El mes es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if((Integer.parseInt(anioFin) == Integer.parseInt(anioInicio) && Integer.parseInt(mesFin) == Integer.parseInt(mesInicio)) && Integer.parseInt(diaFin) < Integer.parseInt(diaInicio)){
+            JOptionPane.showMessageDialog(this, "El dia es invalido");
+            jdcFechaFin.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioInicio) < Integer.parseInt(anioActual)){
+            JOptionPane.showMessageDialog(this, "El año es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
+        }else if(Integer.parseInt(anioInicio) == Integer.parseInt(anioActual) && Integer.parseInt(mesInicio) < Integer.parseInt(mesActual)){
+            JOptionPane.showMessageDialog(this, "El mes es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
+        }else if((Integer.parseInt(anioInicio) == Integer.parseInt(anioActual) && Integer.parseInt(mesInicio) == Integer.parseInt(mesActual)) && Integer.parseInt(diaInicio) < Integer.parseInt(diaActual)){
+            JOptionPane.showMessageDialog(this, "El dia es invalido");
+            jdcFechaInicio.getDateEditor().getUiComponent().requestFocus();
         }else{
             if(conection.insertEntregable(idFase, nombre, tipo, fechaInicio, fechaFin)){
                 txtNombreEntregable.setText("");
                 txtTipoEntregable.setText("");
-                txtFechaInicioEntregable.setText("");
-                txtFechaFinEntregable.setText("");
+                jdcFechaInicio.setDate(null);
+                jdcFechaFin.setDate(null);
 
                 JOptionPane.showMessageDialog(this, "Registro Exitoso");
 
@@ -345,9 +376,9 @@ public class entregables extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.toedter.calendar.JDateChooser jdcFechaFin;
+    private com.toedter.calendar.JDateChooser jdcFechaInicio;
     private javax.swing.JTable jta_entregable;
-    private javax.swing.JTextField txtFechaFinEntregable;
-    private javax.swing.JTextField txtFechaInicioEntregable;
     private javax.swing.JTextField txtNombreEntregable;
     private javax.swing.JTextField txtTipoEntregable;
     // End of variables declaration//GEN-END:variables
