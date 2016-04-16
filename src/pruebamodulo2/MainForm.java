@@ -265,6 +265,7 @@ public class MainForm extends javax.swing.JFrame {
                 fases f = new fases();
                 f.setVisible(true);
                 f.idProyecto = id;
+                f.nombreProyecto = nombre;
                 this.setVisible(false);
             }else{
                 message("No se pudo registrar el proyecto");
